@@ -41,8 +41,8 @@ export const sendResetUserPassword = async (email) => {
   await sendPassResetEmail(email, resetToken);
 
   user.resetToken = resetToken;
-
-  return user.save();
+  const res = await user.save();
+  return res;
 };
 
 export const resetPassword = async (password, resetToken) => {
@@ -52,7 +52,7 @@ export const resetPassword = async (password, resetToken) => {
     throw ApiError.notFound();
   }
 
-  return await updateUserPassword(user, password);
+  return updateUserPassword(user, password);
 };
 
 export const activateUser = async (activationToken) => {
@@ -64,7 +64,8 @@ export const activateUser = async (activationToken) => {
 
   user.activationToken = null;
 
-  return user.save();
+  const res = await user.save();
+  return res;
 };
 
 export const login = () => {};

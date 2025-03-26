@@ -33,7 +33,7 @@ export const registration = async (req, res) => {
 
 export const activate = async (req, res) => {
   const { activationToken } = req.params;
-  const user = await activateUser(activationToken);
+  const user = activateUser(activationToken);
 
   if (!user) {
     throw ApiError.notFound();
@@ -78,7 +78,7 @@ export const logout = async (req, res) => {
 
 export const refresh = async (req, res) => {
   const { refreshToken } = req.cookies;
-  const userData = verifyRefresh(refreshToken);
+  const userData = await verifyRefresh(refreshToken);
   const token = await getByToken(refreshToken);
 
   if (!userData || !token) {
@@ -93,7 +93,7 @@ export const refresh = async (req, res) => {
 export const sendResetPassword = async (req, res) => {
   const { email } = req.body;
 
-  await sendResetUserPassword(email);
+  sendResetUserPassword(email);
 
   res.send({ message: 'OK' });
 };

@@ -19,11 +19,13 @@ const transporter = nodemailer.createTransport({
 });
 
 const send = async ({ email, subject, html }) => {
-  return await transporter.sendMail({
+  const res = await transporter.sendMail({
     to: email,
     subject,
     html,
   });
+
+  return res;
 };
 
 export const sendActivationEmail = (email, token) => {

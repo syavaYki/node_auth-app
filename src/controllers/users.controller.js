@@ -28,7 +28,7 @@ export const updateUser = async (req, res) => {
   const { userId } = req.params;
   const { name, email, confirmEmail, password } = req.body;
   const { refreshToken } = req.cookies;
-  const userData = verifyRefresh(refreshToken);
+  const userData = await verifyRefresh(refreshToken);
   const token = await getByToken(refreshToken);
 
   if (!userData || !token || userData.id !== userId) {
@@ -36,7 +36,7 @@ export const updateUser = async (req, res) => {
   }
 
   if (name) {
-    const user = await updateUserName(userId, name);
+    const user = await updateCurrentUserName(userId, name);
 
     res.send(normalize(user));
 
@@ -52,10 +52,6 @@ export const updateUser = async (req, res) => {
   }
 
   res.sendStatus(422);
-};
-
-export const updateUserName = async (userId, name) => {
-  return updateCurrentUserName(userId, name);
 };
 
 export const updateUserEmail = async (
