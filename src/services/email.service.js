@@ -16,13 +16,10 @@ const transporter = nodemailer.createTransport({
     ciphers: 'SSLv3',
     rejectUnauthorized: false,
   },
-
-  // logger: true,
-  // debug: true,
 });
 
-const send = ({ email, subject, html }) => {
-  return transporter.sendMail({
+const send = async ({ email, subject, html }) => {
+  return await transporter.sendMail({
     to: email,
     subject,
     html,

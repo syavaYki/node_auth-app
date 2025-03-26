@@ -68,7 +68,7 @@ export const logout = async (req, res) => {
   const { refreshToken } = req.cookies;
   const userData = await verifyRefresh(refreshToken);
 
-  if (!userData || !refresh) {
+  if (!userData || !refreshToken) {
     throw ApiError.unauthorized();
   }
   await remove(userData.id);
